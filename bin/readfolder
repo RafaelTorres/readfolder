@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+var  program  = require ('commander');
+var  fs       = require('fs');
+var  wrench   = require('wrench');
+var  colorize = require('colorize');
+var  cconsole = colorize.console;
+var  path     = require('path');
+var  program  = require('commander');
+
+program
+.version('0.0.1'),
+.option("-f,--folder <fol>","insert name  of  folder  at search"),
+.parse(process.argv);
+
+if(program.folder){
+	listFolder(program.folder);
+}
+
+
+function listFolder(folder){
+   var  validationFolder= folderExist(folder);
+   if(validationFolder){
+
+   	  var folderRead = wrench.readdirSyncRecursive(folder);
+
+   	   for( var  i = 0;i<folderRead.length; i++){
+   	   	  cconsole("#bold[files  in  folder sound: ]"+"#green["+folderRead[i]+"]");
+   	   } 
+
+   }
+   else{
+   	     cconsole("#red[file: "+folderRead[i]+"Not exist]");
+   }
+}
+
+function folderExist(path){
+
+	try{
+       var validation = fs.statSync(path).isDirectory();
+       return validation
+	}
+	catch(error){
+         return false
+	}
+	
+}
